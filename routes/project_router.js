@@ -46,18 +46,22 @@ function validateBody(req, res, next) {
   }
 }
 async function validateProject(req, res, next) {
-  let check = await db
-    .findById(req.body.project_id)
-    .then(data => {
-      return data;
-    })
-    .catch(data => {
-      res.status(500).json(data);
-    });
-  if (check.data.project.length) {
-    next();
+  if (req.body.project_id) {
+    let check = await db
+      .findById(req.body.project_id)
+      .then(data => {
+        return data;
+      })
+      .catch(data => {
+        res.status(500).json(data);
+      });
+    if (check.data.project.length) {
+      next();
+    } else {
+      res.status(404).json("project doesnt exist");
+    }
   } else {
-    res.status(404).json("project doesnt exist");
+    res.status(400).json("please provide project_id");
   }
 }
 
