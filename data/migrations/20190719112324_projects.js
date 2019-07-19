@@ -6,32 +6,18 @@ exports.up = function(knex) {
         .text("project_name", 128)
         .unique()
         .notNullable();
-      tbl
-        .text("description", 128)
-        .unique()
-        .notNullable();
-      tbl
-        .bool("completed")
-        .unique()
-        .notNullable();
+      tbl.text("description", 128).notNullable();
+      tbl.integer("completed").notNullable();
       //////////////////////////////////////
       //////////////////////////////////////
       //////////////////////////////////////
     })
     .createTable("actions", tbl => {
       tbl.increments();
-      tbl
-        .text("description", 128)
-        .unique()
-        .notNullable();
-      tbl
-        .text("notes", 128)
-        .unique()
-        .notNullable();
-      tbl
-        .bool("completed")
-        .unique()
-        .notNullable();
+      tbl.integer("project_id").notNullable();
+      tbl.text("description", 128).notNullable();
+      tbl.text("notes", 128).notNullable();
+      tbl.integer("completed").notNullable();
     });
 };
 exports.down = function(knex) {
